@@ -1,10 +1,9 @@
 
 import sys
 import os
-import getpass
 import shutil
 
-username = getpass.getuser()
+username = os.getlogin()
 directory = ""
 drive_dir = "/media/" + username
 def get_dir(f):
