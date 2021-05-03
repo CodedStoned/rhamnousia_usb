@@ -1,65 +1,22 @@
-#Rhamnousia Backdoor
+from blkinfo.filters import BlkDiskInfo
+import json
 
-import os
-import sys
-import psutil
+blkd = BlkDiskInfo()
+location = -1
+quotes = 0
+disks = blkd.get_disks()
+json_o = json.dumps(disks)
+name_index = json_o.find('name')
+end_quote = json_o.find('')
+name_start_index = 10
+print(name_index)
 
-#var
-path = "~/Desktop"
-user_in = ""
-def gain_access():
-
-    print("hacking...")
-    fat32_disks = []
-    ntfs_disks = []
-    ext4_disks = []
-    disks = psutil.disk_partitions()
-    print(disks)
-    os.system("pause")
-    for disk in disks:
-        if disk[2] == "fat32":
-            fat32_disks.append(disk[0])
-        elif disk[2] == "ntfs":
-            ntfs_disks.append(disk[0])
-        elif disk[2] == "ext4":
-            ext4_disks.append(disk[0])
-    print(fat32_disks)
-    print(ntfs_disks)
-    print(ext4_disks)
-    if len(ext4_disks) == 1:
-        print("One linux drive.")
-        os.system("cd "+ ext4_disks[0])
-    elif len(ext4_disks) == 2:
-        print("Two linux disks")
-        os.system("cd "+ ext4_disks[1])
-    if len(ntfs_disks) == 1:
-        print("One windows drive.")
-        os.system("cd "+ ext4_disks[0])
-    elif len(ntfs_disks) == 2:
-        print("Two windows disks")
-        os.system("cd "+ ext4_disks[1])
-    if len(fat32_disks) == 1:
-        print("One fat32 drive.")
-        os.system("cd "+ ext4_disks[0])
-    elif len(fat32_disks) == 2:
-        print("Two fat32 disks")
-        os.system("cd "+ ext4_disks[1])
-    return disks
-def main_menu():
-
-    print("+------------------+")
-    print("|   Type \'hack\'    |")
-    print("+------------------+")
-    user_in = input("Rhamnousia> ")
-    return user_in
-
-user_in = main_menu()
-# print(user_in)
-if user_in == "hack":
-    gain_access()
-elif user_in == "help":
-    print("Type \'hack\' to gain access. once completed, reboot and plug in chip.")
-    system("clear")
-    main_menu()
-else:
-    print("{} is not a valid command. please try again.".format(user_in))
+for char in json_o:
+    if char == "\"":
+        quotes += 1
+        
+    if quotes == 5:
+        end_quote = json_o.find("kname", quotes - 3)    
+drive_name = json_o[name_start_index + 1:end_quote - 4]
+drive = "/dev/" + drive_name
+print(drive)
