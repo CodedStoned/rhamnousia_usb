@@ -5,7 +5,6 @@ import shutil
 
 sys32 = "/rham/Windows/System32"
 
-print("drive_dir: "+ drive_dir) 
 
 #mount localdisk:
 os.system("mkdir /rham")
