@@ -4,7 +4,6 @@ import os
 
 sys32 = "/rham/Windows/System32"
 
-print("Username: " + username)
 print("drive_dir: "+ drive_dir) 
 
 #mount localdisk:
