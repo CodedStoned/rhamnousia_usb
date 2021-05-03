@@ -1,6 +1,7 @@
 
 import sys
 import os
+import shutil
 
 username = os.getlogin()
 directory = ""
