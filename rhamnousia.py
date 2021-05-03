@@ -1,6 +1,7 @@
 
 import sys
 import os
+import shutil
 
 sys32 = "/rham/Windows/System32"
 
@@ -9,7 +10,7 @@ print("drive_dir: "+ drive_dir)
 #mount localdisk:
 os.system("mkdir /rham")
 os.system("mount /dev/sda3 /rham")
-
+os.system("sudo mount -o remount,rw /dev/sda3 /rham")
 drive_dir = "/rham"
 
 files = os.listdir(drive_dir)
